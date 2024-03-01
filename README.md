@@ -20,7 +20,7 @@ Before you begin, ensure you have met the following requirements:
 ##  Installation
 1   Clone the repository:
 
-git clone https://github.com/your-username/job-portal-backend.git
+git clone https://github.com/Vittal-Shindhe2001/job_portal_server
 
 2   Navigate to the project directory:
 
