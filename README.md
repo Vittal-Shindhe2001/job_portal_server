@@ -39,6 +39,7 @@ cp .env.example .env
 
 5   Running the Application
 To start the server, run:
+
 npm start
 # or
 yarn start
