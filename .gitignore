@@ -1,0 +1,7 @@
+node_modules
+
+# dot env file
+.env
+
+# uploads
+uploads
