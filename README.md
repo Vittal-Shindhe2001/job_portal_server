@@ -9,6 +9,7 @@ Welcome to the Job Portal Backend Application. This application serves as the ba
 *    Job application and management
 *    Employer and applicant dashboard
 *   Search functionality with filters
+* Nodemailer for sending mail response to user.
 
 ## Prerequisites
 Before you begin, ensure you have met the following requirements:

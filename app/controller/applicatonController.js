@@ -1,22 +1,56 @@
 const Application = require('../modules/application_model')
 const Company = require('../modules/companies_model');
-const JobSeekerProfile = require('../modules/job_seeker_profile_model');
+const JobSeekerProfile = require('../modules/job_seeker_profile_model')
+const User = require('../modules/user_model')
+const nodemailer = require('nodemailer')
+require('dotenv').config()
 
 const applictionController = {}
 
 // Create a new application
+// Assuming you have configured your email transport options
+const transporter = nodemailer.createTransport({
+    host: 'smtp.example.com',
+    port: 587,
+    secure: false, // true for 465, false for other ports
+    auth: {
+        user: process.env.EMAIL,
+        pass: process.env.PASSWORD
+    }
+});
+
 applictionController.create = async (req, res) => {
     try {
-        const resumePath = req.file?.path ? req.file.path : req.body.resume
-        const { applicant_id, company_Id, job_id, phone } = req.body
+        const resumePath = req.file?.path ? req.file.path : req.body.resume;
+        const { applicant_id, company_Id, job_id, phone } = req.body;
         const formData = {
             applicant_id,
             company_Id,
             job_id,
             phone,
             resume: resumePath
+        };
+
+        // Retrieve applicant details using the applicant_id
+        const applicant = await User.findById(applicant_id);
+
+        // Ensure applicant exists and has an email
+        if (!applicant || !applicant.email) {
+            return res.status(404).json({ error: 'Applicant not found or email not provided' });
         }
-        const application = await Application.create(formData)
+
+        const applicantEmail = applicant.email;
+
+        const application = await Application.create(formData);
+
+        // Send email notification
+        await transporter.sendMail({
+            from: process.env.EMAIL,
+            to: applicantEmail,
+            subject: 'Application Confirmation',
+            text: 'Your job application has been successfully submitted.'
+        });
+
         res.status(201).json(application);
     } catch (error) {
         res.status(400).json({ error: 'Bad Request' });
@@ -125,7 +159,7 @@ applictionController.showId = async (req, res) => {
             application: application,
             applicant_profile: applicant_profile
         }
-        res.json(concatenatedResponse )
+        res.json(concatenatedResponse)
     } catch (error) {
         res.json(error)
     }
