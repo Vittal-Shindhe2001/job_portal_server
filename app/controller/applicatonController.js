@@ -22,7 +22,6 @@ applictionController.create = async (req, res) => {
         const application = await Application.create(formData)
         res.status(201).json(application)
     } catch (error) {
-        console.log(error)
         res.status(400).json({ error: 'Bad Request' });
     }
 }
