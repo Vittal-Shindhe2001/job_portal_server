@@ -82,10 +82,7 @@ userController.info = async (req, res) => {
 
         if (!user) {
             return res.status(404).json({ error: 'User not found' });
-        } else if (user) {
-
-        }
-
+        } 
         // Find the job seeker profile associated with the user
         const jobSeekerProfile = await JobSeekerProfile.findOne({ userId: req.user.id });
 
