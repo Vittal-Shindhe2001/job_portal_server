@@ -8,17 +8,6 @@ require('dotenv').config()
 const applictionController = {}
 
 // Create a new application
-// Assuming you have configured your email transport options
-const transporter = nodemailer.createTransport({
-    host: 'smtp.example.com',
-    port: 587,
-    secure: false, // true for 465, false for other ports
-    auth: {
-        user: process.env.EMAIL,
-        pass: process.env.PASSWORD
-    }
-});
-
 applictionController.create = async (req, res) => {
     try {
         const resumePath = req.file?.path ? req.file.path : req.body.resume;
@@ -29,33 +18,14 @@ applictionController.create = async (req, res) => {
             job_id,
             phone,
             resume: resumePath
-        };
-
-        // Retrieve applicant details using the applicant_id
-        const applicant = await User.findById(applicant_id);
-
-        // Ensure applicant exists and has an email
-        if (!applicant || !applicant.email) {
-            return res.status(404).json({ error: 'Applicant not found or email not provided' });
         }
-
-        const applicantEmail = applicant.email;
-
-        const application = await Application.create(formData);
-
-        // Send email notification
-        await transporter.sendMail({
-            from: process.env.EMAIL,
-            to: applicantEmail,
-            subject: 'Application Confirmation',
-            text: 'Your job application has been successfully submitted.'
-        });
-
-        res.status(201).json(application);
+        const application = await Application.create(formData)
+        res.status(201).json(application)
     } catch (error) {
+        console.log(error)
         res.status(400).json({ error: 'Bad Request' });
     }
-};
+}
 
 // List user all applications
 applictionController.list = async (req, res) => {
