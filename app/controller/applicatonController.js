@@ -1,8 +1,6 @@
 const Application = require('../modules/application_model')
-const Company = require('../modules/companies_model');
+const Company = require('../modules/companies_model')
 const JobSeekerProfile = require('../modules/job_seeker_profile_model')
-const User = require('../modules/user_model')
-const nodemailer = require('nodemailer')
 require('dotenv').config()
 
 const applictionController = {}
