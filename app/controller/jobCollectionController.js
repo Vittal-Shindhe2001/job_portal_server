@@ -51,7 +51,7 @@ job_collection_controller.jobsList = async (req, res) => {
     try {
         const jobs = await Job.find({ isDeleted: false }).populate('company_id')
         if (!jobs || jobs.length === 0) {
-            return res.status(404).json({ error: 'No jobs found for this user' })
+            return res.status(404).json({ error: 'No jobs found' })
         }
         res.json(jobs)
     } catch (error) {
