@@ -19,7 +19,7 @@ const job_collectionSchema = new mongoose.Schema({
         required: true
     },
     salary: {
-        type: Number
+        type: String
     },
     company_id: {
         type: mongoose.Schema.Types.ObjectId,
