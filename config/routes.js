@@ -72,14 +72,14 @@ routers.post('/api/admin/delete/job/post/:id', authenticate, (req, res, next) =>
     next()
 }, authorization, job_collection_controller.destroy)
 //edit job post
-routers.post('/api/admin/edit/job/post/:id', authenticate, (req, res, next) => {
+routers.put('/api/admin/edit/job/post/:id', authenticate, (req, res, next) => {
     req.permittedRoles = ['admin', 'employer']
     next()
 }, authorization, job_collection_controller.update)
 
 
 //job seeker profile update
-routers.post('/api/jobseeker/profileup', authenticate, upload.single('resume'), jobSeekerProfileController.update)
+routers.put('/api/jobseeker/profileup', authenticate, upload.single('resume'), jobSeekerProfileController.update)
 
 // JOB APPLICATION ROUTES
 //job application apply

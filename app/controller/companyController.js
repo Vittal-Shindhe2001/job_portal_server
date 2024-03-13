@@ -13,10 +13,8 @@ companyController.create = async (req, res) => {
             path: 'created_by',
             select: '-password' // Exclude the password field
         })
-        console.log(company);
         res.json({ message: "Company created successfully", company })
     } catch (error) {
-        console.log(error);
         res.status(500).json({ error: error.message })
     }
 }
